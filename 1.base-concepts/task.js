@@ -1,29 +1,30 @@
-'use strict'
+"use strict"
 
 function solveEquation(a, b, c) {
   let arr = [];
+  let d;
   let k1;
   let k2;
   let k0;
-  
-    let d = b**2 - 4*a*c
 
-         if (d > 0) {
-        k1 = (-b + Math.sqrt(d))/(2*a);
-        arr.push(k1);
-        k2 = (-b - Math.sqrt(d))/(2*a);
-        arr.push(k2);
-      } else 
-           
-      if (d === 0) {
-          k0 = -b/(2*a);
-          arr.push(k0)
-        }
+  d = b ** 2 - 4 * a * c;
+  if (d > 0) {
+    k1 = (- b + Math.sqrt(d)) / (2 * a);
+    arr.push(k1);
+    k2 = (- b - Math.sqrt(d)) / (2 * a);
+    arr.push(k2);
+   }
   
+   else 
+    if(d === 0) {
+      k0 = - b / (2 * a);
+      arr.push(k0);
+    }
+
   return arr; // array
-  }
+}
 
-function calculateTotalMortgage(percent, contribution, amount, date) {
+/* function calculateTotalMortgage(percent, contribution, amount, date) {
 
   let percent = parseInt('percent');
   let contribution = parseInt('contribution');
@@ -55,4 +56,4 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
   console.log(totalAmount)
   return totalAmount;
-}
+} */
