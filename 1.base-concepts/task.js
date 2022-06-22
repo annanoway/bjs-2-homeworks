@@ -24,36 +24,41 @@ function solveEquation(a, b, c) {
   return arr; // array
 }
 
-/* function calculateTotalMortgage(percent, contribution, amount, date) {
+function calculateTotalMortgage(percent, contribution, amount, date) {
 
-  let percent = parseInt('percent');
-  let contribution = parseInt('contribution');
-  let amount = parseInt('amount');
+ if (typeof percent === 'string') {
+   percent = parseInt(percent)
+ } 
+  if (typeof contribution === 'string') {
+    contribution = parseInt(contribution)
+  } 
+  if (typeof amount === 'string') {
+    amount = parseInt(amount)
+  } 
 
-  if (typeof(percent) !== 'number') {
-    console.log(`Параметр \'percent\' содержит неправильное значение ${percent}`)
-  }
-  if (typeof(contribution) !== 'number') {
-    console.log(`Параметр \'contribution\' содержит неправильное значение ${contribution}`)
-  }
-  if (typeof(amount) !== 'number') {
-    console.log(`Параметр \'amount\' содержит неправильное значение ${amount}`)
+  if (isNaN(percent) || percent <= 0) {
+    return console.log(`Параметр \'Процентная ставка\' содержит неправильное значение "${percent}"`)
+  } else
+  if (isNaN(contribution) || contribution < 0) {
+    return console.log(`Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`)
+  } else
+  if (isNaN(amount) || amount <= 0) {
+    return console.log(`Параметр \'Общая сумма\' содержит неправильное значение "${amount}"`)
   }
 
-  
-  let creditBody = amount - contribution;
+  let creditBody = amount - contribution
 
   let todayDate = new Date();
-  let years = date.getFullYear - todayDate.getFullYear
-  let months = 12 - todayDate.getMonth + date.getMonth
-  let creditTerms = years*12 + months
+  let years = date.getFullYear() - todayDate.getFullYear() 
+  let months = date.getMonth() - todayDate.getMonth();
+  let creditTerms = years * 12 + months
 
-  let p = percent/12
+  let p = percent / (100 * 12)
 
-  let monthPayment = creditBody * (p + (p / (((1 + p)*creditTerms) - 1)))
+  let monthPayment = creditBody * (p + (p / (Math.pow((1 + p), creditTerms) - 1)))
   
-  let totalAmount = parseInt('(monthPayment*creditTerms).toFixed(2)'); 
+  let totalAmount = Math.round(creditTerms * monthPayment * 100) / 100 
 
   console.log(totalAmount)
   return totalAmount;
-} */
+}
