@@ -1,26 +1,24 @@
-  function cachingDecoratorNew(func) {
-    let cache = [];
-    
-    function wrapper(...args) {
-        const hash = args.join(','); // получаем правильный хэш
-        let objectInCache = cache.find((item) => item === hash); // ищем элемент, хэш которого равен нашему хэшу
-        let result = cache[objectInCache]
-        if (!objectInCache) { // если элемент не найден
-          let result = cache[hash] = func(...args); // в кэше результата нет - придётся считать
-        cache.push(hash) ; // добавляем элемент с правильной структурой
-        if (cache.length > 5) { 
-          cache.shift() // если слишком много элементов в кэше надо удалить самый старый (первый) 
-        }
+function cachingDecoratorNew(func) {
+  let cache = [];
+  function wrapper(...args) {
+    const hash = args.join(','); 
+    let objectInCache = cache.find((item) => item.hash === hash);
+      if (objectInCache !== undefined) { 
+        console.log("Из кэша: " + objectInCache.result); 
+        return "Из кэша: " + objectInCache.result;
+      } else if (!objectInCache) {
+        let result = func.call(this, ...args); 
+        cache.push({hash, result}) ; 
+          if (cache.length > 5) { 
+           cache.shift();
+          }
         console.log("Вычисляем: " + result);
-        return "Вычисляем: " + result;
-        }
-        else {
-        console.log("Из кэша: " + result); // индекс нам известен, по индексу в массиве лежит объект, как получить нужное значение?
-        return "Из кэша: " + result;
-        }    
-    }
-    return wrapper;
-  }
+        return "Вычисляем: " + result; 
+    } 
+}
+return wrapper;
+}
+
 
 
   function debounceDecoratorNew(func, ms) {
@@ -30,9 +28,7 @@
         func(...args);
       }
       clearTimeout(timerId);
-      timerId = setTimeout(() => {
-        return func(...args)
-      }, ms)
+      timerId = setTimeout(() => func(...args), ms)
     }
     return wrapper;
 }
@@ -45,9 +41,7 @@
         func(...args);
       }
       clearTimeout(timerId);
-      timerId = setTimeout(() => {
-        return func(...args)
-      }, ms);
+      timerId = setTimeout(() => func(...args), ms);
       wrapper.count++;
     }
     return wrapper;
